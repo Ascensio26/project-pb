@@ -45,17 +45,20 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.transportOptions}>
           <TouchableOpacity
             style={styles.transportButton}
-            onPress={() => navigation.navigate('Map')}
+            onPress={() => navigation.navigate('Map')} // This navigates to a "Map" screen (you need to define it separately)
           >
             <Image source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} style={styles.transportIcon} />
             <Text>Shuttle Bus</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.transportButton}>
-          <Image source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} style={styles.transportIcon} />
+          <TouchableOpacity
+            style={styles.transportButton}
+            onPress={() => navigation.navigate('Bike')} // This navigates to the BikeScreen
+          >
+            <Image source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} style={styles.transportIcon} />
             <Text>Sepeda</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.transportButton}>
-          <Image source={{ uri: 'project-pb/assets/shuttle.png' }} style={styles.transportIcon} />
+            <Image source={{ uri: 'project-pb/assets/shuttle.png' }} style={styles.transportIcon} />
             <Text>E-Bike</Text>
           </TouchableOpacity>
         </View>

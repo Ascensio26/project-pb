@@ -54,7 +54,11 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.transportOptions}>
           <TouchableOpacity
             style={styles.transportButton}
+<<<<<<< HEAD
             onPress={() => navigation.navigate("Map")}
+=======
+            onPress={() => navigation.navigate('Map')} // This navigates to a "Map" screen (you need to define it separately)
+>>>>>>> efcc1d5017a26c11fef30aa91f1ea5b7dac76ebe
           >
             <Image
               source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
@@ -62,6 +66,7 @@ const HomeScreen = ({ navigation }) => {
             />
             <Text>Shuttle Bus</Text>
           </TouchableOpacity>
+<<<<<<< HEAD
           <TouchableOpacity style={styles.transportButton}>
             <Image
               source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
@@ -74,6 +79,17 @@ const HomeScreen = ({ navigation }) => {
               source={{ uri: "project-pb/assets/shuttle.png" }}
               style={styles.transportIcon}
             />
+=======
+          <TouchableOpacity
+            style={styles.transportButton}
+            onPress={() => navigation.navigate('Bike')} // This navigates to the BikeScreen
+          >
+            <Image source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} style={styles.transportIcon} />
+            <Text>Sepeda</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.transportButton}>
+            <Image source={{ uri: 'project-pb/assets/shuttle.png' }} style={styles.transportIcon} />
+>>>>>>> efcc1d5017a26c11fef30aa91f1ea5b7dac76ebe
             <Text>E-Bike</Text>
           </TouchableOpacity>
         </View>

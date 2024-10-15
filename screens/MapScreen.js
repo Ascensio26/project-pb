@@ -1,19 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
-import MapView from 'react-native-maps';
-import * as Location from 'expo-location';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
-import { Picker } from '@react-native-picker/picker'; // Import Picker
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import MapView from "react-native-maps";
+import * as Location from "expo-location"; // mengambil info lokasi pengguna
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker"; // Import Picker (memilih tempat tujuan)
 
 export default function App() {
   const [location, setLocation] = useState(null);
-  const [selectedTime, setSelectedTime] = useState('Sekarang'); // State for the dropdown
+  const [selectedTime, setSelectedTime] = useState("Sekarang"); // State for the dropdown
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied');
+      let { status } = await Location.requestForegroundPermissionsAsync(); // izin penggunaan lokasi
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
         return;
       }
 
@@ -28,7 +34,7 @@ export default function App() {
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: location ? location.latitude : -6.1741, // Default location if location not fetched
+          latitude: location ? location.latitude : -6.1741, // Default location if location not fetched (titik pengguna yg tampil di awal)
           longitude: location ? location.longitude : 106.8296, // Default location
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
@@ -43,7 +49,10 @@ export default function App() {
         {/* Destination Input */}
         <View style={styles.inputContainer}>
           <FontAwesome name="map-marker" size={24} color="green" />
-          <TextInput style={styles.input} placeholder="Masukkan alamat Tujuan" />
+          <TextInput
+            style={styles.input}
+            placeholder="Masukkan alamat Tujuan"
+          />
         </View>
 
         {/* Origin Input */}
@@ -84,10 +93,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   form: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    width: '100%',
-    backgroundColor: 'white',
+    width: "100%",
+    backgroundColor: "white",
     padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -95,13 +104,13 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f0f0f0",
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
@@ -115,14 +124,14 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   button: {
-    backgroundColor: '#007bff',
+    backgroundColor: "#007bff",
     paddingVertical: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

@@ -50,9 +50,12 @@ const HomeScreen = ({ navigation }) => {
             <Image source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} style={styles.transportIcon} />
             <Text>Shuttle Bus</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.transportButton}>
-          <Image source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} style={styles.transportIcon} />
-            <Text>Sepeda</Text>
+          <TouchableOpacity
+            style={styles.transportButton}
+            onPress={() => navigation.navigate('Bike')} // Update navigation to 'Bike'
+          >
+            <Image source={{ uri: 'project-pb/assets/shuttle.png' }} style={styles.transportIcon} />
+            <Text>E-Bike</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.transportButton}>
           <Image source={{ uri: 'project-pb/assets/shuttle.png' }} style={styles.transportIcon} />

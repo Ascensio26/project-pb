@@ -47,18 +47,21 @@ const HomeScreen = ({ navigation }) => {
             style={styles.transportButton}
             onPress={() => navigation.navigate('Map')}
           >
-            <Image source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} style={styles.transportIcon} />
+            <View style={styles.transportButton}>
+            <Image source={require('../assets/shuttle.png')} style={styles.transportIcon} />
             <Text>Shuttle Bus</Text>
+</View>
+
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.transportButton}
-            onPress={() => navigation.navigate('Bike')} // Update navigation to 'Bike'
+            onPress={() => navigation.navigate('Bike')}
           >
-            <Image source={{ uri: 'project-pb/assets/shuttle.png' }} style={styles.transportIcon} />
-            <Text>E-Bike</Text>
+            <Image source={require('../assets/bike.png')} style={styles.transportIcon} />
+            <Text>Bike</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.transportButton}>
-          <Image source={{ uri: 'project-pb/assets/shuttle.png' }} style={styles.transportIcon} />
+            <Image source={require('../assets/e-bike.png')} style={styles.transportIcon} />
             <Text>E-Bike</Text>
           </TouchableOpacity>
         </View>
@@ -76,15 +79,16 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1,  // Ensures the view takes up the entire screen
     backgroundColor: '#f8f8f8',
   },
   topSection: {
+    flex: 1,
     padding: 20,
     backgroundColor: '#fff',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    elevation: 5,
+    elevation: 0,
   },
   title: {
     fontSize: 24,
@@ -136,4 +140,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen; 
+export default HomeScreen;

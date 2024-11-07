@@ -9,30 +9,67 @@ const HomeScreen = ({ navigation }) => {
       type: 'Shuttle Bus',
       location: 'Perpustakaan UNSRI Indralaya',
       time: 'Senin, 06 Mei 2024 - 09:00 WIB',
-      status: 'Seleksi',
+      status: 'Selesai',
     },
     {
       id: '2',
       type: 'Sepeda',
       location: 'Rektorat UNSRI Indralaya',
       time: 'Senin, 06 Mei 2024 - 09:00 WIB',
-      status: 'Seleksi',
+      status: 'Selesai',
     },
     {
       id: '3',
       type: 'Sepeda Listrik',
       location: 'Rektorat UNSRI Indralaya',
       time: 'Senin, 06 Mei 2024 - 09:00 WIB',
-      status: 'Seleksi',
+      status: 'Selesai',
+    },
+    {
+      id: '4',
+      type: 'Sepeda Listrik',
+      location: 'Rektorat UNSRI Indralaya',
+      time: 'Senin, 06 Mei 2024 - 09:00 WIB',
+      status: 'Selesai',
+    },
+    {
+      id: '5',
+      type: 'Sepeda Listrik',
+      location: 'Rektorat UNSRI Indralaya',
+      time: 'Senin, 06 Mei 2024 - 09:00 WIB',
+      status: 'Selesai',
+    },
+    {
+      id: '6',
+      type: 'Sepeda Listrik',
+      location: 'Rektorat UNSRI Indralaya',
+      time: 'Senin, 06 Mei 2024 - 09:00 WIB',
+      status: 'Selesai',
     },
   ]);
 
+  const getImageSource = (type) => {
+    switch (type) {
+      case 'Shuttle Bus':
+        return require('../assets/shuttle.png'); // Adjust path as necessary
+      case 'Sepeda':
+        return require('../assets/bike.png'); // Adjust path as necessary
+      case 'Sepeda Listrik':
+        return require('../assets/e-bike.png'); // Adjust path as necessary
+      default:
+        return null;
+    }
+  };
+
   const renderBooking = ({ item }) => (
     <View style={styles.bookingContainer}>
-      <Text style={styles.bookingType}>{item.type}</Text>
-      <Text>{item.location}</Text>
-      <Text>{item.time}</Text>
-      <Text style={styles.bookingStatus}>{item.status}</Text>
+      <Image source={getImageSource(item.type)} style={styles.bookingImage} />
+      <View style={styles.bookingDetails}>
+        <Text style={styles.bookingType}>{item.type}</Text>
+        <Text>{item.location}</Text>
+        <Text>{item.time}</Text>
+        <Text style={styles.bookingStatus}>{item.status}</Text>
+      </View>
     </View>
   );
 
@@ -47,11 +84,8 @@ const HomeScreen = ({ navigation }) => {
             style={styles.transportButton}
             onPress={() => navigation.navigate('Map')}
           >
-            <View style={styles.transportButton}>
             <Image source={require('../assets/shuttle.png')} style={styles.transportIcon} />
             <Text>Shuttle Bus</Text>
-</View>
-
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.transportButton}
@@ -125,12 +159,22 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   bookingContainer: {
+    flexDirection: 'row', // Align items in a row
     backgroundColor: '#fff',
     padding: 15,
     marginHorizontal: 20,
     marginBottom: 10,
     borderRadius: 10,
     elevation: 2,
+    alignItems: 'center', // Center items vertically
+  },
+  bookingImage: {
+    width: 50, // Adjust width as needed
+    height: 50, // Adjust height as needed
+    marginRight: 10, // Space between image and text
+  },
+  bookingDetails: {
+    flex: 1, // Allow details to take up remaining space
   },
   bookingType: {
     fontWeight: 'bold',

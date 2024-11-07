@@ -24,10 +24,7 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{
-            title: 'Home',
-            headerTitleAlign: 'center', // Center the header title
-          }}
+          options={{ headerShown: false }} // Hide header for home
         />
 
         {/* Map Screen */}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "835320293869",
+    "project_id": "busri-f4265",
+    "storage_bucket": "busri-f4265.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835320293869:android:0493a9995b2fe02dd55fe4",
+        "android_client_info": {
+          "package_name": "com.allannugraha26.projectpb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOAbbfcf63qrPH7Hx0EPtFdvd878JFQNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

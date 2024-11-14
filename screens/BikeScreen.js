@@ -3,27 +3,28 @@ import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, TextInput } 
 
 const BikeScreen = () => {
   const bikes = [
-    { id: '1', name: 'Sepeda 01M', color: 'Warna merah', available: true, image: require('../assets/shuttle.png') },
-    { id: '2', name: 'Sepeda 02M', color: 'Warna merah', available: true, image: require('../assets/shuttle.png') },
-    { id: '3', name: 'Sepeda 01K', color: 'Warna kuning', available: false, image: require('../assets/shuttle.png') },
-    { id: '4', name: 'Sepeda 01B', color: 'Warna biru', available: true, image: require('../assets/shuttle.png') },
-    { id: '5', name: 'Sepeda 01H', color: 'Warna hijau', available: true, image: require('../assets/shuttle.png') },
-    { id: '6', name: 'Sepeda 01P', color: 'Warna putih', available: true, image: require('../assets/shuttle.png') },
+    { id: '1', name: 'Sepeda 01M', color: 'Warna merah', available: true, image: { uri: 'https://reactnative.dev/img/tiny_logo.png' } },
+    { id: '2', name: 'Sepeda 02M', color: 'Warna merah', available: true, image: { uri: 'https://reactnative.dev/img/tiny_logo.png' } },
+    { id: '3', name: 'Sepeda 01K', color: 'Warna kuning', available: false, image: { uri: 'https://reactnative.dev/img/tiny_logo.png' } },
+    { id: '4', name: 'Sepeda 01B', color: 'Warna biru', available: true, image: { uri: 'https://reactnative.dev/img/tiny_logo.png' } },
+    { id: '5', name: 'Sepeda 01H', color: 'Warna hijau', available: true, image: { uri: 'https://reactnative.dev/img/tiny_logo.png' } },
+    { id: '6', name: 'Sepeda 01P', color: 'Warna putih', available: true, image: { uri: 'https://reactnative.dev/img/tiny_logo.png' } },
   ];
 
   const renderBikeItem = ({ item }) => (
-    <View style={styles.bikeContainer}>
-      <Image source={item.image} style={styles.transportIcon} />
-      <View style={styles.textContainer}>
+    <View style={styles.bikeItem}>
+      <Image source={item.image} style={styles.bikeImage} />
+      <View style={styles.bikeInfo}>
         <Text style={styles.bikeName}>{item.name}</Text>
         <Text style={styles.bikeColor}>{item.color}</Text>
-        <Text style={[styles.availabilityText, item.available ? styles.available : styles.notAvailable]}>
-          {item.available ? 'Tersedia' : 'Tidak tersedia'}
-        </Text>
       </View>
-      <TouchableOpacity style={[styles.button, item.available ? styles.buttonAvailable : styles.buttonNotAvailable]} disabled={!item.available}>
-        <Text style={styles.buttonText}>+ Pilih</Text>
-      </TouchableOpacity>
+      {item.available ? (
+        <TouchableOpacity style={styles.availableButton}>
+          <Text style={styles.buttonText}>Pilih</Text>
+        </TouchableOpacity>
+      ) : (
+        <Text style={styles.unavailableText}>Tidak tersedia</Text>
+      )}
     </View>
   );
 

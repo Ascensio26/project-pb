@@ -18,7 +18,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/splash.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.allannugraha26.projectpb"
     },
     "web": {
       "favicon": "./assets/favicon.png"

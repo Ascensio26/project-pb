@@ -4,9 +4,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import MapScreen from './screens/MapScreen';
-import BikeScreen from './screens/BikeScreen'; 
-import LoginScreen from './screens/LoginScreen'; // Import the LoginScreen
+import BikeScreen from './screens/BikeScreen';
+import EBikeScreen from './screens/EBikeScreen'; // Tambahkan impor ini
+import LoginScreen from './screens/LoginScreen';
 import BicycleScreen from './screens/bikeScreen2';
+import EBikeDetailScreen from './screens/EBikeDetail';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +22,7 @@ export default function App() {
           component={LoginScreen}
           options={{ title: 'Login', headerShown: false }} // Hide header for login
         />
-        
+
         {/* Home Screen */}
         <Stack.Screen
           name="Home"
@@ -40,16 +42,34 @@ export default function App() {
           component={BikeScreen}
           options={{ title: 'Bike' }}
         />
-        
-        <Stack.Screen 
-        name="BikeScreen" 
-        component={BikeScreen} 
-        options={{ title: 'Daftar Sepeda' }} />
 
+        {/* E-Bike Screen */}
+        <Stack.Screen
+          name="E-Bike"
+          component={EBikeScreen} // Pastikan nama komponen sesuai
+          options={{ title: 'E-Bike' }}
+        />
+
+        {/* Bike Screen 2 */}
         <Stack.Screen 
-        name="BicycleScreen" 
-        component={BicycleScreen} 
-        options={{ title: 'Detail Sepeda' }} />
+          name="BikeScreen" 
+          component={BikeScreen} 
+          options={{ title: 'Daftar Sepeda' }} 
+        />
+
+        {/* Bicycle Screen */}
+        <Stack.Screen 
+          name="BicycleScreen" 
+          component={BicycleScreen} 
+          options={{ title: 'Detail Sepeda' }} 
+        />
+
+        {/* E-Bicycle Screen */}
+        <Stack.Screen 
+          name="EBikeDetailScreen" 
+          component={EBikeDetailScreen} 
+          options={{ title: 'Detail E-Bike' }} 
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

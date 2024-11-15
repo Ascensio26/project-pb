@@ -94,7 +94,10 @@ const HomeScreen = ({ navigation }) => {
             <Image source={require('../assets/bike.png')} style={styles.transportIcon} />
             <Text>Bike</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.transportButton}>
+          <TouchableOpacity 
+          style={styles.transportButton}
+          onPress={() => navigation.navigate('E-Bike')}
+          >
             <Image source={require('../assets/e-bike.png')} style={styles.transportIcon} />
             <Text>E-Bike</Text>
           </TouchableOpacity>

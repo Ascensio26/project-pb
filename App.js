@@ -6,6 +6,7 @@ import HomeScreen from './screens/HomeScreen';
 import MapScreen from './screens/MapScreen';
 import BikeScreen from './screens/BikeScreen'; 
 import LoginScreen from './screens/LoginScreen'; // Import the LoginScreen
+import BicycleScreen from './screens/bikeScreen2';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +25,6 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ headerShown: false }} // Hide header for home
         />
 
         {/* Map Screen */}
@@ -40,6 +40,16 @@ export default function App() {
           component={BikeScreen}
           options={{ title: 'Bike' }}
         />
+        
+        <Stack.Screen 
+        name="BikeScreen" 
+        component={BikeScreen} 
+        options={{ title: 'Daftar Sepeda' }} />
+
+        <Stack.Screen 
+        name="BicycleScreen" 
+        component={BicycleScreen} 
+        options={{ title: 'Detail Sepeda' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,61 +1,22 @@
 // screens/HomeScreen.js
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, Image, Button } from 'react-native';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase'; // Import auth from your firebase.js file
 
 const HomeScreen = ({ navigation }) => {
   const [bookings] = useState([
-    {
-      id: '1',
-      type: 'Shuttle Bus',
-      location: 'Perpustakaan UNSRI Indralaya',
-      time: 'Senin, 06 Mei 2024 - 09:00 WIB',
-      status: 'Selesai',
-    },
-    {
-      id: '2',
-      type: 'Sepeda',
-      location: 'Rektorat UNSRI Indralaya',
-      time: 'Senin, 06 Mei 2024 - 09:00 WIB',
-      status: 'Selesai',
-    },
-    {
-      id: '3',
-      type: 'Sepeda Listrik',
-      location: 'Rektorat UNSRI Indralaya',
-      time: 'Senin, 06 Mei 2024 - 09:00 WIB',
-      status: 'Selesai',
-    },
-    {
-      id: '4',
-      type: 'Sepeda Listrik',
-      location: 'Rektorat UNSRI Indralaya',
-      time: 'Senin, 06 Mei 2024 - 09:00 WIB',
-      status: 'Selesai',
-    },
-    {
-      id: '5',
-      type: 'Sepeda Listrik',
-      location: 'Rektorat UNSRI Indralaya',
-      time: 'Senin, 06 Mei 2024 - 09:00 WIB',
-      status: 'Selesai',
-    },
-    {
-      id: '6',
-      type: 'Sepeda Listrik',
-      location: 'Rektorat UNSRI Indralaya',
-      time: 'Senin, 06 Mei 2024 - 09:00 WIB',
-      status: 'Selesai',
-    },
+    // Your booking data here...
   ]);
 
   const getImageSource = (type) => {
     switch (type) {
       case 'Shuttle Bus':
-        return require('../assets/shuttle.png'); // Adjust path as necessary
+        return require('../assets/shuttle.png');
       case 'Sepeda':
-        return require('../assets/bike.png'); // Adjust path as necessary
+        return require('../assets/bike.png');
       case 'Sepeda Listrik':
-        return require('../assets/e-bike.png'); // Adjust path as necessary
+        return require('../assets/e-bike.png');
       default:
         return null;
     }
@@ -72,6 +33,19 @@ const HomeScreen = ({ navigation }) => {
       </View>
     </View>
   );
+
+  // Logout function
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        // Navigate to the login screen after successful logout
+        navigation.navigate('Login');
+      })
+      .catch((error) => {
+        // Handle errors during logout
+        console.error('Logout Error: ', error.message);
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -94,7 +68,10 @@ const HomeScreen = ({ navigation }) => {
             <Image source={require('../assets/bike.png')} style={styles.transportIcon} />
             <Text>Bike</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.transportButton}>
+          <TouchableOpacity
+            style={styles.transportButton}
+            onPress={() => navigation.navigate('E-Bike')}
+          >
             <Image source={require('../assets/e-bike.png')} style={styles.transportIcon} />
             <Text>E-Bike</Text>
           </TouchableOpacity>
@@ -106,6 +83,11 @@ const HomeScreen = ({ navigation }) => {
           renderItem={renderBooking}
           keyExtractor={(item) => item.id}
         />
+
+        {/* Logout Button */}
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutText}>Logout</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -113,7 +95,7 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,  // Ensures the view takes up the entire screen
+    flex: 1,
     backgroundColor: '#f8f8f8',
   },
   topSection: {
@@ -159,28 +141,39 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   bookingContainer: {
-    flexDirection: 'row', // Align items in a row
+    flexDirection: 'row',
     backgroundColor: '#fff',
     padding: 15,
     marginHorizontal: 20,
     marginBottom: 10,
     borderRadius: 10,
     elevation: 2,
-    alignItems: 'center', // Center items vertically
+    alignItems: 'center',
   },
   bookingImage: {
-    width: 50, // Adjust width as needed
-    height: 50, // Adjust height as needed
-    marginRight: 10, // Space between image and text
+    width: 50,
+    height: 50,
+    marginRight: 10,
   },
   bookingDetails: {
-    flex: 1, // Allow details to take up remaining space
+    flex: 1,
   },
   bookingType: {
     fontWeight: 'bold',
   },
   bookingStatus: {
     color: 'green',
+  },
+  logoutButton: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: '#ff6347',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  logoutText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

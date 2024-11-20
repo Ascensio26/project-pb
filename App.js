@@ -10,6 +10,9 @@ import DriverMap from './screens/driverMap';
 import { auth } from './firebase'; // Firebase auth
 import { getDatabase, ref, get } from 'firebase/database'; // For Realtime Database
 import { onAuthStateChanged } from 'firebase/auth';
+import EBikeScreen from './screens/EBikeScreen'; // Tambahkan impor ini
+import BicycleScreen from './screens/bikeScreen2';
+import EBikeDetailScreen from './screens/EBikeDetail';
 
 const Stack = createStackNavigator();
 

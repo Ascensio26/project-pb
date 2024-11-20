@@ -1,61 +1,17 @@
 import React from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-} from "react-native";
+import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, TextInput } from "react-native";
 
-const EBikeScreen = () => {
+const EBikeScreen = ({ navigation }) => {
   const ebikes = [
-    {
-      id: "1",
-      name: "Sepeda 01ELB",
-      color: "Warna merah",
-      available: true,
-      image: require("https://reactnative.dev/img/tiny_logo.png"),
-    },
-    {
-      id: "2",
-      name: "Sepeda 02ELB",
-      color: "Warna merah",
-      available: true,
-      image: require("https://reactnative.dev/img/tiny_logo.png"),
-    },
-    {
-      id: "3",
-      name: "Sepeda 03ELB",
-      color: "Warna kuning",
-      available: false,
-      image: require("https://reactnative.dev/img/tiny_logo.png"),
-    },
-    {
-      id: "4",
-      name: "Sepeda 04ELB",
-      color: "Warna biru",
-      available: true,
-      image: require("https://reactnative.dev/img/tiny_logo.png"),
-    },
-    {
-      id: "5",
-      name: "Sepeda 05ELB",
-      color: "Warna hijau",
-      available: true,
-      image: require("https://reactnative.dev/img/tiny_logo.png"),
-    },
-    {
-      id: "6",
-      name: "Sepeda 06ELB",
-      color: "Warna putih",
-      available: true,
-      image: require("https://reactnative.dev/img/tiny_logo.png"),
-    },
+    { id: "1", name: "Sepeda 01ELB", color: "Warna merah", available: true, image: require("../assets/SL-Red.png") },
+    { id: "2", name: "Sepeda 02ELB", color: "Warna hitam", available: true, image: require("../assets/SL-Black.png") },
+    { id: "3", name: "Sepeda 03ELB", color: "Warna kuning", available: false, image: require("../assets/SL-Yellow.png") },
+    { id: "4", name: "Sepeda 04ELB", color: "Warna biru", available: true, image: require("../assets/SL-Blue.png") },
+    { id: "5", name: "Sepeda 05ELB", color: "Warna pink", available: true, image: require("../assets/SL-Pink.png") },
+    { id: "6", name: "Sepeda 06ELB", color: "Warna cream", available: true, image: require("../assets/SL-Cream.png") },
   ];
 
-  const renderBikeItem = ({ item }) => (
+  const renderEBikeItem = ({ item }) => (
     <View style={styles.bikeItem}>
       <Image source={item.image} style={styles.bikeImage} />
       <View style={styles.bikeInfo}>
@@ -63,7 +19,10 @@ const EBikeScreen = () => {
         <Text style={styles.bikeColor}>{item.color}</Text>
       </View>
       {item.available ? (
-        <TouchableOpacity style={styles.availableButton}>
+        <TouchableOpacity
+          style={styles.availableButton}
+          onPress={() => navigation.navigate("EBikeDetailScreen", { bike: item })} // Pass bike data to EBikeDetails screen
+        >
           <Text style={styles.buttonText}>Pilih</Text>
         </TouchableOpacity>
       ) : (
@@ -74,13 +33,10 @@ const EBikeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Perlu Sepeda Listrik? Mau Kemana?"
-      />
+      <TextInput style={styles.searchInput} placeholder="Perlu Sepeda Listrik? Mau Kemana?" />
       <FlatList
         data={ebikes}
-        renderItem={renderBikeItem}
+        renderItem={renderEBikeItem}
         keyExtractor={(item) => item.id}
       />
     </View>

@@ -1,137 +1,56 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import MapView from "react-native-maps";
-import * as Location from "expo-location"; // mengambil info lokasi pengguna
-import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker"; // Import Picker (memilih tempat tujuan)
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import { Database } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 
-export default function App() {
-  const [location, setLocation] = useState(null);
-  const [selectedTime, setSelectedTime] = useState("Sekarang"); // State for the dropdown
+const UserApp = () => {
+  const [driverLocation, setDriverLocation] = useState(null);
 
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync(); // izin penggunaan lokasi
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-        return;
+    const locationRef = ref(database, "driver/location");
+    onValue(locationRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setDriverLocation({
+          latitude: data.latitude,
+          longitude: data.longitude,
+        });
       }
-
-      let currentLocation = await Location.getCurrentPositionAsync({});
-      setLocation(currentLocation.coords);
-    })();
+    });
   }, []);
 
   return (
     <View style={styles.container}>
-      {/* Map */}
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: location ? location.latitude : -6.1741, // Default location if location not fetched (titik pengguna yg tampil di awal)
-          longitude: location ? location.longitude : 106.8296, // Default location
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
+          latitude: driverLocation?.latitude || 37.78825,
+          longitude: driverLocation?.longitude || -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
         }}
-        showsUserLocation={true}
-      />
-
-      {/* Form */}
-      <View style={styles.form}>
-        <Text style={styles.header}>Pesan Shuttle Bus</Text>
-
-        {/* Destination Input */}
-        <View style={styles.inputContainer}>
-          <FontAwesome name="map-marker" size={24} color="green" />
-          <TextInput
-            style={styles.input}
-            placeholder="Masukkan alamat Tujuan"
+      >
+        {driverLocation && (
+          <Marker
+            coordinate={driverLocation}
+            title="Driver"
+            description="Current location of the driver"
           />
-        </View>
-
-        {/* Origin Input */}
-        <View style={styles.inputContainer}>
-          <MaterialIcons name="place" size={24} color="red" />
-          <TextInput style={styles.input} placeholder="Masukkan alamat Asal" />
-        </View>
-
-        {/* Time Dropdown */}
-        <View style={styles.inputContainer}>
-          <MaterialIcons name="access-time" size={24} color="gold" />
-          <Picker
-            selectedValue={selectedTime}
-            style={styles.picker}
-            onValueChange={(itemValue) => setSelectedTime(itemValue)}
-          >
-            <Picker.Item label="Sekarang" value="Sekarang" />
-            <Picker.Item label="30 Menit" value="30 Menit" />
-            <Picker.Item label="1 Jam" value="1 Jam" />
-            <Picker.Item label="2 Jam" value="2 Jam" />
-          </Picker>
-        </View>
-
-        {/* Submit Button */}
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>LANJUT</Text>
-        </TouchableOpacity>
-      </View>
+        )}
+      </MapView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   map: {
-    flex: 1,
-  },
-  form: {
-    position: "absolute",
-    bottom: 0,
     width: "100%",
-    backgroundColor: "white",
-    padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    elevation: 5,
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#f0f0f0",
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 10,
-  },
-  input: {
-    marginLeft: 10,
-    flex: 1,
-  },
-  picker: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  button: {
-    backgroundColor: "#007bff",
-    paddingVertical: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
+    height: "100%",
   },
 });
+
+export default UserApp;

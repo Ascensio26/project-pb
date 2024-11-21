@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,9 +9,9 @@ import DriverMap from './screens/driverMap';
 import { auth } from './firebase'; // Firebase auth
 import { getDatabase, ref, get } from 'firebase/database'; // For Realtime Database
 import { onAuthStateChanged } from 'firebase/auth';
-import EBikeScreen from './screens/EBikeScreen'; // Tambahkan impor ini
+import EBikeScreen from './screens/EBikeScreen'; // Import EBikeScreen
+import EBikeDetailScreen from './screens/EBikeDetail'; // Import EBikeDetailScreen
 import BicycleScreen from './screens/bikeScreen2';
-import EBikeDetailScreen from './screens/EBikeDetail';
 
 const Stack = createStackNavigator();
 
@@ -68,6 +67,23 @@ export default function App() {
                 name="Bike"
                 component={BikeScreen}
                 options={{ title: 'Bike' }}
+              />
+              <Stack.Screen
+                name="BikeDetail"
+                component={BicycleScreen}
+                options={{ title: 'BikeDetail' }}
+              />
+              {/* Add EBikeScreen */}
+              <Stack.Screen
+                name="E-Bike"
+                component={EBikeScreen}
+                options={{ title: 'E-Bike' }}
+              />
+              {/* Add EBikeDetailScreen */}
+              <Stack.Screen
+                name="EBikeDetailScreen"
+                component={EBikeDetailScreen}
+                options={{ title: 'Detail Sepeda Listrik' }}
               />
             </>
           )

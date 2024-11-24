@@ -11,7 +11,6 @@ import { getDatabase, ref, get } from 'firebase/database'; // For Realtime Datab
 import { onAuthStateChanged } from 'firebase/auth';
 import useAppStateListener from './hooks/stateListener';
 import EBikeScreen from './screens/EBikeScreen'; // Tambahkan impor ini
-import EBikeScreen from './screens/EBikeScreen'; // Import EBikeScreen
 import EBikeDetailScreen from './screens/EBikeDetail'; // Import EBikeDetailScreen
 import BicycleScreen from './screens/bikeScreen2';
 

@@ -10,6 +10,7 @@ import DriverMap from './screens/driverMap';
 import { auth } from './firebase'; // Firebase auth
 import { getDatabase, ref, get } from 'firebase/database'; // For Realtime Database
 import { onAuthStateChanged } from 'firebase/auth';
+import useAppStateListener from './hooks/stateListener';
 import EBikeScreen from './screens/EBikeScreen'; // Tambahkan impor ini
 import BicycleScreen from './screens/bikeScreen2';
 import EBikeDetailScreen from './screens/EBikeDetail';
@@ -20,6 +21,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
 
+  useAppStateListener();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -48,7 +50,7 @@ export default function App() {
         {userRole ? (
           userRole === 'driver' ? (
             <Stack.Screen
-              name="DriverApp"
+              name="DriverMap"
               component={DriverMap}
               options={{ title: 'Driver Dashboard', headerShown: false }}
             />

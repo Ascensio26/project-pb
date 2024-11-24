@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, TextInput, Button, Text, StyleSheet, Alert } from "react-native";
+import { Picker } from "@react-native-picker/picker"; // Import Picker for dropdown
 import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "../firebase";
 import { getDatabase, ref, set, get } from "firebase/database"; // For Firebase Realtime Database
 
@@ -47,7 +48,7 @@ const LoginScreen = ({ navigation }) => {
 
   const navigateToRole = (userRole) => {
     if (userRole === "driver") {
-      navigation.replace("DriverApp");
+      navigation.replace("DriverMap");
     } else {
       navigation.replace("Home");
     }
@@ -72,12 +73,17 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
       />
       {isSigningUp && (
-        <TextInput
-          style={styles.input}
-          placeholder="Role (e.g., user or driver)"
-          value={role}
-          onChangeText={setRole}
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Select Role</Text>
+          <Picker
+            selectedValue={role}
+            style={styles.picker}
+            onValueChange={(itemValue) => setRole(itemValue)}
+          >
+            <Picker.Item label="User" value="user" />
+            <Picker.Item label="Driver" value="driver" />
+          </Picker>
+        </View>
       )}
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <Button title={isSigningUp ? "Sign Up" : "Login"} onPress={handleAuth} />
@@ -106,6 +112,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 5,
     paddingHorizontal: 10,
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  picker: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
   },
   header: {
     fontSize: 24,

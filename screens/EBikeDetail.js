@@ -1,7 +1,15 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
-export default function EBikeDetailScreen() {
+export default function EBikeDetailScreen({ route }) {
+  const { bike } = route.params; // Get the selected bike from navigation params
+
+  const otherEBikes = [
+    { id: '1', name: 'Sepeda 02ELB', color: 'Warna hitam', status: 'Tersedia', image: require('../assets/SL-Black.png') },
+    { id: '2', name: 'Sepeda 03ELB', color: 'Warna kuning', status: 'Tidak tersedia', image: require('../assets/SL-Yellow.png') },
+    { id: '3', name: 'Sepeda 04ELB', color: 'Warna biru', status: 'Tersedia', image: require('../assets/SL-Blue.png') },
+  ];
+
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
@@ -9,16 +17,18 @@ export default function EBikeDetailScreen() {
         <Text style={styles.headerText}>Sepeda Listrik</Text>
       </View>
 
-      {/* Main EBike Section */}
+      {/* Selected EBike Section */}
       <View style={styles.mainEBikeContainer}>
-        <Image
-          source={require('../assets/SL-Red.png')} 
-          style={styles.ebikeImage}
-        />
-        <Text style={styles.ebikeTitle}>Sepeda 01ELB</Text>
-        <Text style={styles.ebikeColor}>Warna merah</Text>
-        <Text style={styles.ebikeStatus}>Tersedia</Text>
-        <TouchableOpacity style={styles.selectButton}>
+        <Image source={bike.image} style={styles.ebikeImage} />
+        <Text style={styles.ebikeTitle}>{bike.name}</Text>
+        <Text style={styles.ebikeColor}>{bike.color}</Text>
+        <Text style={[styles.ebikeStatus, { color: bike.available ? 'green' : 'red' }]}>
+          {bike.available ? 'Tersedia' : 'Tidak tersedia'}
+        </Text>
+        <TouchableOpacity
+          style={styles.selectButton}
+          disabled={!bike.available}
+        >
           <Text style={styles.selectButtonText}>PILIH</Text>
         </TouchableOpacity>
       </View>
@@ -26,17 +36,15 @@ export default function EBikeDetailScreen() {
       {/* Other EBikes Section */}
       <Text style={styles.otherEBikesTitle}>Lihat sepeda listrik lain</Text>
       <View style={styles.otherEBikesContainer}>
-        {[
-          { id: 1, name: 'Sepeda 02ELB', color: 'Warna pink', status: 'Tersedia', image: require('../assets/SL-Pink.png') },
-          { id: 2, name: 'Sepeda 03ELB', color: 'Warna kuning', status: 'Tidak tersedia', image: require('../assets/SL-Yellow.png') },
-          { id: 3, name: 'Sepeda 04ELB', color: 'Warna biru', status: 'Tersedia', image: require('../assets/SL-Blue.png') },
-        ].map(ebike => (
+        {otherEBikes.map((ebike) => (
           <View key={ebike.id} style={styles.ebikeItem}>
             <Image source={ebike.image} style={styles.ebikeItemImage} />
             <View style={styles.ebikeInfo}>
               <Text style={styles.ebikeItemTitle}>{ebike.name}</Text>
               <Text style={styles.ebikeItemColor}>{ebike.color}</Text>
-              <Text style={[styles.ebikeItemStatus, { color: ebike.status === 'Tersedia' ? 'green' : 'red' }]}>{ebike.status}</Text>
+              <Text style={[styles.ebikeItemStatus, { color: ebike.status === 'Tersedia' ? 'green' : 'red' }]}>
+                {ebike.status}
+              </Text>
             </View>
             <TouchableOpacity
               style={[
@@ -90,7 +98,6 @@ const styles = StyleSheet.create({
   },
   ebikeStatus: {
     fontSize: 14,
-    color: 'green',
     marginVertical: 5,
   },
   selectButton: {

@@ -13,6 +13,7 @@ import useAppStateListener from './hooks/stateListener';
 import EBikeScreen from './screens/EBikeScreen'; // Import EBikeScreen
 import EBikeDetailScreen from './screens/EBikeDetail'; // Import EBikeDetailScreen
 import BicycleScreen from './screens/bikeScreen2'; // Import the detailed BicycleScreen
+import BikeLoanScreen from './screens/BikeLoanScreen';
 
 const Stack = createStackNavigator();
 
@@ -84,6 +85,11 @@ export default function App() {
                 name="EBikeDetailScreen"
                 component={EBikeDetailScreen}
                 options={{ title: 'Detail Sepeda Listrik' }}
+              />
+              <Stack.Screen
+                name="BikeLoan"
+                component={BikeLoanScreen}
+                options={{ title: 'Peminjaman Sepeda' }}
               />
             </>
           )

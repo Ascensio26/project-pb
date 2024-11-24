@@ -6,7 +6,7 @@ const BikeScreen = ({ navigation }) => {
     { id: '1', name: 'Sepeda 01M', color: 'Warna merah', available: true, image: require('../assets/sepedaMerah.png') },
     { id: '2', name: 'Sepeda 02M', color: 'Warna biru', available: true, image: require('../assets/sepedaBiru.png') },
     { id: '3', name: 'Sepeda 01K', color: 'Warna kuning', available: true, image: require('../assets/sepedaKuning.png') },
-    { id: '4', name: 'Sepeda 01B', color: 'Warna biru', available: true, image: require('../assets/sepedaBiru.png') },
+    { id: '4', name: 'Sepeda 01B', color: 'Warna hitam', available: true, image: require('../assets/sepedaHitam.png') },
     { id: '5', name: 'Sepeda 01H', color: 'Warna hijau', available: true, image: require('../assets/sepedaHijau.png') },
     { id: '6', name: 'Sepeda 01P', color: 'Warna putih', available: true, image: require('../assets/sepedaPutih.png') },
   ];

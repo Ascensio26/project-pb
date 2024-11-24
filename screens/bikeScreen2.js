@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
-export default function BicycleScreen({ route }) {
+export default function BicycleScreen({ route, navigation }) {
   const { bike } = route.params; // Get the selected bike from navigation params
 
   const otherBikes = [
     { id: '1', name: 'Sepeda 01M', color: 'Warna merah', status: 'Tersedia', image: require('../assets/sepedaMerah.png') },
-    { id: '2', name: 'Sepeda 02M', color: 'Warna merah', status: 'Tersedia', image: require('../assets/sepedaMerah.png') },
+    { id: '2', name: 'Sepeda 02M', color: 'Warna biru', status: 'Tersedia', image: require('../assets/sepedaBiru.png') },
     { id: '3', name: 'Sepeda 01K', color: 'Warna kuning', status: 'Tidak tersedia', image: require('../assets/sepedaKuning.png') },
   ];
 
@@ -28,6 +28,7 @@ export default function BicycleScreen({ route }) {
         <TouchableOpacity
           style={styles.selectButton}
           disabled={!bike.available}
+          onPress={() => navigation.navigate('BikeLoan', { bike })}
         >
           <Text style={styles.selectButtonText}>PILIH</Text>
         </TouchableOpacity>
@@ -57,6 +58,7 @@ export default function BicycleScreen({ route }) {
                 { backgroundColor: otherBike.status === 'Tersedia' ? '#007bff' : '#ccc' },
               ]}
               disabled={otherBike.status !== 'Tersedia'}
+              onPress={() => navigation.navigate('BikeLoanScreen', { bike: otherBike })}
             >
               <Text style={styles.bikeSelectButtonText}>+ Pilih</Text>
             </TouchableOpacity>
@@ -66,6 +68,7 @@ export default function BicycleScreen({ route }) {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

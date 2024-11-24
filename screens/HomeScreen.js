@@ -34,19 +34,23 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 
-  // Logout function
   const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        // Navigate to the login screen after successful logout
-        navigation.navigate('Login');
-      })
-      .catch((error) => {
-        // Handle errors during logout
-        console.error('Logout Error: ', error.message);
-      });
-  };
-
+    if (auth) {
+      console.log('auth instance:', auth); // Pastikan instansi auth valid
+      signOut(auth)
+        .then(() => {
+          console.log('Signed out successfully');
+          navigation.navigate('Login');
+        })
+        .catch((error) => {
+          console.error('Error signing out: ', error.message);
+          console.error('Error stack: ', error.stack);
+        });
+    } else {
+      console.error('Error: auth instance is not initialized properly.');
+    }
+  };  
+  
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>

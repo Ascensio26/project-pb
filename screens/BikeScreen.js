@@ -21,7 +21,7 @@ const BikeScreen = ({ navigation }) => {
       {item.available ? (
         <TouchableOpacity
           style={styles.availableButton}
-          onPress={() => navigation.navigate('BicycleScreen', { bike: item })} // Pass bike data to BikeScreen2
+          onPress={() => navigation.navigate('BikeDetail', { bike: item })} // Pass bike data to BikeScreen2
         >
           <Text style={styles.buttonText}>Pilih</Text>
         </TouchableOpacity>

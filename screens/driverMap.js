@@ -9,6 +9,8 @@ const DriverMap = ({ navigation }) => {
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
+    let locationInterval;
+
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -16,7 +18,15 @@ const DriverMap = ({ navigation }) => {
         Alert.alert("Permission Denied", "Please enable location permissions.");
         return;
       }
+
+      // Start sending location every 10 seconds
+      locationInterval = setInterval(sendLocation, 10000);
     })();
+
+    // Cleanup interval when component unmounts
+    return () => {
+      if (locationInterval) clearInterval(locationInterval);
+    };
   }, []);
 
   const sendLocation = async () => {
@@ -34,10 +44,10 @@ const DriverMap = ({ navigation }) => {
         timestamp: currentLocation.timestamp,
       });
 
-      Alert.alert("Success", "Location sent to the server!");
+      console.log("Location sent to the server:", currentLocation.coords);
     } catch (error) {
       setErrorMsg("Failed to retrieve location.");
-      Alert.alert("Error", "Unable to fetch and send location.");
+      console.error("Error fetching location:", error);
     }
   };
 
@@ -53,7 +63,7 @@ const DriverMap = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Button title="Send Location" onPress={sendLocation} />
+      <Button title="Send Location Manually" onPress={sendLocation} />
       {location && (
         <View style={styles.locationDetails}>
           <Text>Latitude: {location.coords.latitude}</Text>

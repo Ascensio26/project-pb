@@ -10,9 +10,9 @@ import { auth } from './firebase'; // Firebase auth
 import { getDatabase, ref, get } from 'firebase/database'; // For Realtime Database
 import { onAuthStateChanged } from 'firebase/auth';
 import useAppStateListener from './hooks/stateListener';
-import EBikeScreen from './screens/EBikeScreen'; // Tambahkan impor ini
+import EBikeScreen from './screens/EBikeScreen'; // Import EBikeScreen
 import EBikeDetailScreen from './screens/EBikeDetail'; // Import EBikeDetailScreen
-import BicycleScreen from './screens/bikeScreen2';
+import BicycleScreen from './screens/bikeScreen2'; // Import the detailed BicycleScreen
 
 const Stack = createStackNavigator();
 
@@ -20,7 +20,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
 
-  useAppStateListener();
+  useAppStateListener(); // Hook to monitor app state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -28,19 +28,19 @@ export default function App() {
         const userRef = ref(db, `users/${user.uid}/role`);
         const snapshot = await get(userRef);
         if (snapshot.exists()) {
-          setUserRole(snapshot.val()); // Set the user role
+          setUserRole(snapshot.val()); // Set user role
         }
       } else {
-        setUserRole(null); // User logged out
+        setUserRole(null); // Reset if user logs out
       }
-      setIsLoading(false); // Stop loading spinner
+      setIsLoading(false); // End loading
     });
 
-    return unsubscribe; // Cleanup listener
+    return unsubscribe; // Cleanup the listener
   }, []);
 
   if (isLoading) {
-    return null; // Add a loading spinner here if needed
+    return null; // Optionally replace with a loading spinner
   }
 
   return (
@@ -71,17 +71,15 @@ export default function App() {
                 options={{ title: 'Bike' }}
               />
               <Stack.Screen
-                name="BikeDetail"
+                name="BicycleScreen"
                 component={BicycleScreen}
-                options={{ title: 'BikeDetail' }}
+                options={{ title: 'Bike Detail' }}
               />
-              {/* Add EBikeScreen */}
               <Stack.Screen
                 name="E-Bike"
                 component={EBikeScreen}
                 options={{ title: 'E-Bike' }}
               />
-              {/* Add EBikeDetailScreen */}
               <Stack.Screen
                 name="EBikeDetailScreen"
                 component={EBikeDetailScreen}

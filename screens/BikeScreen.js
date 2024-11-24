@@ -4,7 +4,7 @@ import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, TextInput } 
 const BikeScreen = ({ navigation }) => {
   const bikes = [
     { id: '1', name: 'Sepeda 01M', color: 'Warna merah', available: true, image: require('../assets/sepedaMerah.png') },
-    { id: '2', name: 'Sepeda 02M', color: 'Warna merah', available: true, image: require('../assets/sepedaMerah.png') },
+    { id: '2', name: 'Sepeda 02M', color: 'Warna biru', available: true, image: require('../assets/sepedaBiru.png') },
     { id: '3', name: 'Sepeda 01K', color: 'Warna kuning', available: true, image: require('../assets/sepedaKuning.png') },
     { id: '4', name: 'Sepeda 01B', color: 'Warna biru', available: true, image: require('../assets/sepedaBiru.png') },
     { id: '5', name: 'Sepeda 01H', color: 'Warna hijau', available: true, image: require('../assets/sepedaHijau.png') },
@@ -21,7 +21,7 @@ const BikeScreen = ({ navigation }) => {
       {item.available ? (
         <TouchableOpacity
           style={styles.availableButton}
-          onPress={() => navigation.navigate('BikeDetail', { bike: item })} // Pass bike data to BikeScreen2
+          onPress={() => navigation.navigate('BicycleScreen', { bike: item })} // Pass bike details
         >
           <Text style={styles.buttonText}>Pilih</Text>
         </TouchableOpacity>

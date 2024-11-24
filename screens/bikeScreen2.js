@@ -1,7 +1,15 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
-export default function BicycleScreen() {
+export default function BicycleScreen({ route }) {
+  const { bike } = route.params; // Get the selected bike from navigation params
+
+  const otherBikes = [
+    { id: '1', name: 'Sepeda 01M', color: 'Warna merah', status: 'Tersedia', image: require('../assets/sepedaMerah.png') },
+    { id: '2', name: 'Sepeda 02M', color: 'Warna merah', status: 'Tersedia', image: require('../assets/sepedaMerah.png') },
+    { id: '3', name: 'Sepeda 01K', color: 'Warna kuning', status: 'Tidak tersedia', image: require('../assets/sepedaKuning.png') },
+  ];
+
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
@@ -9,43 +17,48 @@ export default function BicycleScreen() {
         <Text style={styles.headerText}>Sepeda</Text>
       </View>
 
-      {/* Main Bicycle Section */}
-      <View style={styles.mainBicycleContainer}>
-        <Image
-          source={{ uri: 'https://example.com/main-bicycle-image.jpg' }} // Replace with actual image URL
-          style={styles.bicycleImage}
-        />
-        <Text style={styles.bicycleTitle}>Sepeda 01M</Text>
-        <Text style={styles.bicycleColor}>Warna merah</Text>
-        <Text style={styles.bicycleStatus}>Tersedia</Text>
-        <TouchableOpacity style={styles.selectButton}>
+      {/* Selected Bike Section */}
+      <View style={styles.mainBikeContainer}>
+        <Image source={bike.image} style={styles.mainBikeImage} />
+        <Text style={styles.bikeTitle}>{bike.name}</Text>
+        <Text style={styles.bikeColor}>{bike.color}</Text>
+        <Text style={[styles.bikeStatus, { color: bike.available ? 'green' : 'red' }]}>
+          {bike.available ? 'Tersedia' : 'Tidak tersedia'}
+        </Text>
+        <TouchableOpacity
+          style={styles.selectButton}
+          disabled={!bike.available}
+        >
           <Text style={styles.selectButtonText}>PILIH</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Other Bicycles Section */}
-      <Text style={styles.otherBicyclesTitle}>Lihat sepeda lain</Text>
-      <View style={styles.otherBicyclesContainer}>
-        {[
-          { id: 1, name: 'Sepeda 01M', color: 'Warna merah', status: 'Tersedia', image: 'https://example.com/bicycle-1.jpg' },
-          { id: 2, name: 'Sepeda 02M', color: 'Warna hitam', status: 'Tersedia', image: 'https://example.com/bicycle-2.jpg' },
-          { id: 3, name: 'Sepeda 01K', color: 'Warna kuning', status: 'Tidak tersedia', image: 'https://example.com/bicycle-3.jpg' },
-        ].map(bike => (
-          <View key={bike.id} style={styles.bicycleItem}>
-            <Image source={{ uri: bike.image }} style={styles.bicycleItemImage} />
-            <View style={styles.bicycleInfo}>
-              <Text style={styles.bicycleItemTitle}>{bike.name}</Text>
-              <Text style={styles.bicycleItemColor}>{bike.color}</Text>
-              <Text style={[styles.bicycleItemStatus, { color: bike.status === 'Tersedia' ? 'green' : 'red' }]}>{bike.status}</Text>
+      {/* Other Bikes Section */}
+      <Text style={styles.otherBikesTitle}>Lihat sepeda lain</Text>
+      <View style={styles.otherBikesContainer}>
+        {otherBikes.map((otherBike) => (
+          <View key={otherBike.id} style={styles.bikeItem}>
+            <Image source={otherBike.image} style={styles.bikeItemImage} />
+            <View style={styles.bikeInfo}>
+              <Text style={styles.bikeName}>{otherBike.name}</Text>
+              <Text style={styles.bikeColor}>{otherBike.color}</Text>
+              <Text
+                style={[
+                  styles.bikeStatus,
+                  { color: otherBike.status === 'Tersedia' ? 'green' : 'red' },
+                ]}
+              >
+                {otherBike.status}
+              </Text>
             </View>
             <TouchableOpacity
               style={[
-                styles.selectItemButton,
-                { backgroundColor: bike.status === 'Tersedia' ? '#007BFF' : '#ccc' },
+                styles.bikeSelectButton,
+                { backgroundColor: otherBike.status === 'Tersedia' ? '#007bff' : '#ccc' },
               ]}
-              disabled={bike.status !== 'Tersedia'}
+              disabled={otherBike.status !== 'Tersedia'}
             >
-              <Text style={styles.selectButtonText}>+ Pilih</Text>
+              <Text style={styles.bikeSelectButtonText}>+ Pilih</Text>
             </TouchableOpacity>
           </View>
         ))}
@@ -65,36 +78,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
-  mainBicycleContainer: {
-    alignItems: 'center',
+  mainBikeContainer: {
     padding: 20,
+    alignItems: 'center',
     backgroundColor: '#fff',
     marginBottom: 10,
   },
-  bicycleImage: {
+  mainBikeImage: {
     width: 200,
     height: 120,
     resizeMode: 'contain',
   },
-  bicycleTitle: {
+  bikeTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginVertical: 10,
   },
-  bicycleColor: {
+  bikeColor: {
     fontSize: 14,
     color: '#6c757d',
   },
-  bicycleStatus: {
+  bikeStatus: {
     fontSize: 14,
-    color: 'green',
     marginVertical: 5,
   },
   selectButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#007bff',
     paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 5,
@@ -104,16 +116,15 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-  otherBicyclesTitle: {
+  otherBikesTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginHorizontal: 16,
-    marginVertical: 10,
+    margin: 16,
   },
-  otherBicyclesContainer: {
+  otherBikesContainer: {
     paddingHorizontal: 16,
   },
-  bicycleItem: {
+  bikeItem: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -123,30 +134,30 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e9ecef',
   },
-  bicycleItemImage: {
+  bikeItemImage: {
     width: 50,
     height: 50,
     resizeMode: 'contain',
     marginRight: 10,
   },
-  bicycleInfo: {
+  bikeInfo: {
     flex: 1,
   },
-  bicycleItemTitle: {
+  bikeName: {
     fontSize: 14,
     fontWeight: 'bold',
   },
-  bicycleItemColor: {
-    fontSize: 12,
-    color: '#6c757d',
-  },
-  bicycleItemStatus: {
+  bikeStatus: {
     fontSize: 12,
     fontWeight: 'bold',
   },
-  selectItemButton: {
+  bikeSelectButton: {
     paddingVertical: 6,
     paddingHorizontal: 15,
     borderRadius: 5,
+  },
+  bikeSelectButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });

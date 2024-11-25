@@ -83,53 +83,6 @@ const MapScreen = () => {
           />
         )}
       </MapView>
-
-      {/* Form */}
-      <View style={styles.form}>
-        <Text style={styles.header}>Pesan Shuttle Bus</Text>
-
-        {/* Destination Input */}
-        <View style={styles.inputContainer}>
-          <FontAwesome name="map-marker" size={24} color="green" />
-          <TextInput
-            style={styles.input}
-            placeholder="Masukkan alamat Tujuan"
-            value={destination}
-            onChangeText={setDestination}
-          />
-        </View>
-
-        {/* Origin Input */}
-        <View style={styles.inputContainer}>
-          <MaterialIcons name="place" size={24} color="red" />
-          <TextInput
-            style={styles.input}
-            placeholder="Masukkan alamat Asal"
-            value={origin}
-            onChangeText={setOrigin}
-          />
-        </View>
-
-        {/* Time Dropdown */}
-        <View style={styles.inputContainer}>
-          <MaterialIcons name="access-time" size={24} color="gold" />
-          <Picker
-            selectedValue={selectedTime}
-            style={styles.picker}
-            onValueChange={(itemValue) => setSelectedTime(itemValue)}
-          >
-            <Picker.Item label="Sekarang" value="Sekarang" />
-            <Picker.Item label="30 Menit" value="30 Menit" />
-            <Picker.Item label="1 Jam" value="1 Jam" />
-            <Picker.Item label="2 Jam" value="2 Jam" />
-          </Picker>
-        </View>
-
-        {/* Submit Button */}
-        <TouchableOpacity style={styles.button} onPress={handleBooking}>
-          <Text style={styles.buttonText}>LANJUT</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };

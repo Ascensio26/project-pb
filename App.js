@@ -21,7 +21,6 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
 
-  useAppStateListener(); // Hook to monitor app state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -88,6 +87,11 @@ export default function App() {
               />
               <Stack.Screen
                 name="BikeLoan"
+                component={BikeLoanScreen}
+                options={{ title: 'Peminjaman Sepeda' }}
+              />
+              <Stack.Screen
+                name="EbikeLoan"
                 component={BikeLoanScreen}
                 options={{ title: 'Peminjaman Sepeda' }}
               />

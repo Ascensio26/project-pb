@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Button, Text, StyleSheet, Alert } from "react-native";
 import * as Location from "expo-location";
 import { getDatabase, ref, set } from "firebase/database"; // Firebase Database
-import { auth, signOut } from "../firebase"; // Firebase Auth
+import { auth } from "../firebase"; // Firebase Auth
+import { signOut } from "firebase/auth";
 
 const DriverMap = ({ navigation }) => {
   const [location, setLocation] = useState(null);
@@ -18,12 +19,8 @@ const DriverMap = ({ navigation }) => {
         Alert.alert("Permission Denied", "Please enable location permissions.");
         return;
       }
-
-      // Start sending location every 10 seconds
       locationInterval = setInterval(sendLocation, 10000);
     })();
-
-    // Cleanup interval when component unmounts
     return () => {
       if (locationInterval) clearInterval(locationInterval);
     };
@@ -51,15 +48,22 @@ const DriverMap = ({ navigation }) => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      Alert.alert("Logged Out", "You have been logged out successfully.");
-      navigation.replace("Login"); // Redirect to the login screen
-    } catch (error) {
-      Alert.alert("Error", "Failed to log out.");
+  const handleLogout = () => {
+    if (auth) {
+      console.log('auth instance:', auth); // Pastikan instansi auth valid
+      signOut(auth)
+        .then(() => {
+          console.log('Signed out successfully');
+          navigation.navigate('Login');
+        })
+        .catch((error) => {
+          console.error('Error signing out: ', error.message);
+          console.error('Error stack: ', error.stack);
+        });
+    } else {
+      console.error('Error: auth instance is not initialized properly.');
     }
-  };
+  }; 
 
   return (
     <View style={styles.container}>

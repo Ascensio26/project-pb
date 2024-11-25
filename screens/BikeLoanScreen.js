@@ -7,12 +7,13 @@ import {
   StyleSheet,
   Image,
   Alert,
+  ScrollView,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function PeminjamanScreen({ route }) {
-  const { bike } = route.params; // Mengambil data sepeda yang dipilih
+  const { bike } = route.params;
   const [name, setName] = useState('');
   const [nim, setNim] = useState('');
   const [date, setDate] = useState(new Date());
@@ -27,35 +28,28 @@ export default function PeminjamanScreen({ route }) {
   };
 
   const handleFileUpload = async () => {
-    console.log('Memulai pemilihan foto...');
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    console.log('Permission Result:', permissionResult);
-  
     if (!permissionResult.granted) {
       Alert.alert('Izin diperlukan!', 'Aplikasi membutuhkan akses ke galeri.');
       return;
     }
-  
+
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
     });
-  
-    console.log('Hasil pemilihan gambar:', result);
-  
+
     if (result.canceled) {
       Alert.alert('Pemilihan gambar dibatalkan', 'Tidak ada gambar yang dipilih.');
       return;
     }
-  
+
     if (result.assets && result.assets.length > 0) {
       setPhoto(result.assets[0].uri);
-      console.log('Foto yang dipilih:', result.assets[0].uri);
     } else {
       Alert.alert('Gagal memilih gambar', 'Tidak ada gambar yang dipilih.');
     }
   };
-
 
   const handleSubmit = () => {
     if (!name || !nim || !time || !photo) {
@@ -75,71 +69,75 @@ export default function PeminjamanScreen({ route }) {
   };
 
   return (
-    <View style={styles.container}>
-    {/* Bagian Detail Barang */}
-    <Text style={styles.title}>Detail Barang</Text>
+    <ScrollView contentContainerStyle={styles.scrollContent}>
+      <View style={styles.container}>
+        {/* Detail Barang */}
+        <Text style={styles.title}>Detail Barang</Text>
 
-    {/* Gambar Sepeda */}
-    <Image source={bike.image} style={styles.bikeImage} />
-    <Text style={styles.itemTitle}>{bike.name}</Text>
-    <Text style={styles.itemDetail}>{bike.color}</Text>
+        {/* Image Handling */}
+        {bike.image && (
+          <Image
+            source={typeof bike.image === 'string' ? { uri: bike.image } : bike.image}
+            style={styles.bikeImage}
+          />
+        )}
+        <Text style={styles.itemTitle}>{bike.name}</Text>
+        <Text style={styles.itemDetail}>{bike.color}</Text>
 
-      {/* Bagian Detail Peminjaman */}
-      <Text style={styles.title}>Detail Peminjaman</Text>
+        {/* Detail Peminjaman */}
+        <Text style={styles.title}>Detail Peminjaman</Text>
 
-      {/* Input Nama */}
-      <TextInput
-        style={styles.input}
-        placeholder="Nama"
-        value={name}
-        onChangeText={setName}
-      />
-
-      {/* Input NIM */}
-      <TextInput
-        style={styles.input}
-        placeholder="NIM"
-        keyboardType="number-pad"
-        value={nim}
-        onChangeText={setNim}
-      />
-
-      {/* Input Tanggal */}
-      <TouchableOpacity
-        onPress={() => setShowDatePicker(true)}
-        style={styles.input}
-      >
-        <Text>{date.toLocaleDateString()}</Text>
-      </TouchableOpacity>
-
-      {showDatePicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="default"
-          onChange={onDateChange}
+        {/* Input Nama */}
+        <TextInput
+          style={styles.input}
+          placeholder="Nama"
+          value={name}
+          onChangeText={setName}
         />
-      )}
 
-      {/* Input Waktu */}
-      <TextInput
-        style={styles.input}
-        placeholder="Pilih Waktu (contoh: 10:00 AM)"
-        value={time}
-        onChangeText={setTime}
-      />
+        {/* Input NIM */}
+        <TextInput
+          style={styles.input}
+          placeholder="NIM"
+          keyboardType="number-pad"
+          value={nim}
+          onChangeText={setNim}
+        />
 
-      {/* Upload Foto KPM */}
-      <TouchableOpacity style={styles.uploadButton} onPress={handleFileUpload}>
-        <Text>Pilih Foto KPM</Text>
-      </TouchableOpacity>
-      {photo && <Image source={{ uri: photo }} style={styles.imagePreview} />}
+        {/* Input Tanggal */}
+        <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.dateInput}>
+          <Text>{date.toLocaleDateString()}</Text>
+        </TouchableOpacity>
 
-      {/* Tombol Pesan */}
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-        <Text style={styles.submitText}>PESAN SEKARANG</Text>
-      </TouchableOpacity>
-    </View>
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onDateChange}
+          />
+        )}
+
+        {/* Input Waktu */}
+        <TextInput
+          style={styles.input}
+          placeholder="Pilih Waktu (contoh: 10:00 AM)"
+          value={time}
+          onChangeText={setTime}
+        />
+
+        {/* Upload Foto KPM */}
+        <TouchableOpacity style={styles.uploadButton} onPress={handleFileUpload}>
+          <Text>Pilih Foto KPM</Text>
+        </TouchableOpacity>
+        {photo && <Image source={{ uri: photo }} style={styles.imagePreview} />}
+
+        {/* Tombol Pesan */}
+        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+          <Text style={styles.submitText}>PESAN SEKARANG</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -164,6 +162,13 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+  dateInput: {
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
@@ -201,5 +206,5 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     alignSelf: 'center',
     marginBottom: 10,
-  },  
+  },
 });

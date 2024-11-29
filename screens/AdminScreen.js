@@ -114,26 +114,30 @@ const AdminAccountManagementScreen = ({ navigation }) => {
       <Text style={styles.header}>Manage User Accounts</Text>
 
       {/* Add Account Form */}
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Email"
-        value={newEmail}
-        onChangeText={setNewEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Password"
-        value={newPassword}
-        onChangeText={setNewPassword}
-        secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Role (user/driver/admin)"
-        value={newRole}
-        onChangeText={setNewRole}
-      />
-      <Button title="Add User" onPress={handleAddAccount} />
+      <View style={styles.formContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Email"
+          value={newEmail}
+          onChangeText={setNewEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Password"
+          value={newPassword}
+          onChangeText={setNewPassword}
+          secureTextEntry
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Role (user/driver/admin)"
+          value={newRole}
+          onChangeText={setNewRole}
+        />
+        <TouchableOpacity onPress={handleAddAccount} style={styles.addButton}>
+          <Text style={styles.addButtonText}>Add User</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Display user list */}
       <FlatList
@@ -145,19 +149,19 @@ const AdminAccountManagementScreen = ({ navigation }) => {
             {item.id !== currentUser?.uid && (
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                  style={styles.roleButton}
+                  style={[styles.roleButton, styles.makeDriverButton]}
                   onPress={() => handleChangeRole(item.id, 'driver')}
                 >
                   <Text style={styles.buttonText}>Make Driver</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={styles.roleButton}
+                  style={[styles.roleButton, styles.makeAdminButton]}
                   onPress={() => handleChangeRole(item.id, 'admin')}
                 >
                   <Text style={styles.buttonText}>Make Admin</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={styles.roleButton}
+                  style={[styles.roleButton, styles.revokeRoleButton]}
                   onPress={() => handleChangeRole(item.id, 'user')}
                 >
                   <Text style={styles.buttonText}>Revoke Admin/Driver</Text>
@@ -186,36 +190,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
   },
-  userItem: {
-    backgroundColor: '#fff',
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 8,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 10,
-  },
-  roleButton: {
-    backgroundColor: '#007bff',
-    padding: 10,
-    borderRadius: 8,
-    marginHorizontal: 5,
-  },
-  buttonText: {
-    color: '#fff',
-  },
-  logoutButton: {
-    backgroundColor: '#ff4d4d',
-    padding: 10,
-    borderRadius: 8,
-    marginTop: 20,
-  },
-  logoutText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
+  formContainer: {
+    marginBottom: 20,
   },
   input: {
     height: 40,
@@ -225,7 +201,59 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius: 5,
   },
+  addButton: {
+    backgroundColor: '#28a745',
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  userItem: {
+    backgroundColor: '#fff',
+    padding: 15,
+    marginBottom: 10,
+    borderRadius: 8,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  roleButton: {
+    padding: 10,
+    borderRadius: 8,
+    marginHorizontal: 5,
+    flex: 1,
+    alignItems: 'center',
+  },
+  makeDriverButton: {
+    backgroundColor: '#007bff',
+  },
+  makeAdminButton: {
+    backgroundColor: '#28a745',
+  },
+  revokeRoleButton: {
+    backgroundColor: '#ffc107',
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  logoutButton: {
+    backgroundColor: '#ff4d4d',
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  logoutText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });
 
 export default AdminAccountManagementScreen;
-``
